@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "32875721257",
+    "firebase_url": "https://studentevaluationproject.firebaseio.com",
+    "project_id": "studentevaluationproject",
+    "storage_bucket": "studentevaluationproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32875721257:android:455a645903ca30ead3e238",
+        "android_client_info": {
+          "package_name": "com.example.studentevaluationproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32875721257-k2hjf3b87q8b0k539j387vqs3dsseaj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.studentevaluationproject",
+            "certificate_hash": "a8ab88bea8d4b376b41f887c24cae22975591ad9"
+          }
+        },
+        {
+          "client_id": "32875721257-0bibb121ttlv0eajq9vj74gh85ddcen4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsNwNsQRoBsdkiD8rb_WVqjIeLy_rHdqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32875721257-0bibb121ttlv0eajq9vj74gh85ddcen4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

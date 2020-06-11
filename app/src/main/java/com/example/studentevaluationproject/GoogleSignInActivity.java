@@ -54,7 +54,6 @@ public class GoogleSignInActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null) {
                     // sign in successful
-                    progressDialog.dismiss();
                     Intent intent = new Intent(GoogleSignInActivity.this, SignedInMainMenuActivity.class);
                     startActivity(intent);
                     finish();
@@ -133,9 +132,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(TAG, "Authentication successful.");
-
-
-
+                            progressDialog.dismiss();
                         }
 
 

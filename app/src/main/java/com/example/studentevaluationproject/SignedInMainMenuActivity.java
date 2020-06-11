@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignedInMainMenuActivity extends AppCompatActivity {
 
-    private Button signOutButton;
+    private Button signOutButton, addDetailsButton;
     private TextView textView;
 
     FirebaseUser user;
@@ -26,6 +26,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signed_in_main_menu);
 
         signOutButton = (Button) findViewById(R.id.signOutButton);
+        addDetailsButton = (Button) findViewById(R.id.addDetailsButton);
         textView = (TextView) findViewById(R.id.textView);
 
 
@@ -37,7 +38,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
 
         textView.setText(msg);
 
-        Toast.makeText(this, "Signed In as " + u_name, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Signed in as " + u_name, Toast.LENGTH_LONG).show();
 
 
 
@@ -48,6 +49,15 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignedInMainMenuActivity.this, MainActivity.class);
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "Signed Out", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        addDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignedInMainMenuActivity.this, AddUserDetailsActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

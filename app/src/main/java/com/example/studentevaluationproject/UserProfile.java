@@ -3,7 +3,9 @@ package com.example.studentevaluationproject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class UserProfile {
+import java.io.Serializable;
+
+public class UserProfile implements Serializable {
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -22,6 +24,11 @@ public class UserProfile {
         this.batch = "";
         this.isStudent = true;
         this.postSelected = false;
+    }
+
+    public void setPostSelected(String post) {
+        this.isStudent = post.equals("student");
+        this.postSelected = true;
     }
 
     public void addStudent(String u_roll, String u_name, String u_gender, String u_phone, String u_email, String u_branch, String u_batch, String u_semester) {

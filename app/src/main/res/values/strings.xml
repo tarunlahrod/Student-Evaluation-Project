@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">StudentEvaluationProject</string>
+    <string name="batch_spinner_prompt" translatable="false">Batch</string>
+    <string name="branch_spinner_prompt" translatable="false">Branch</string>
+    <string name="semester_spinner_prompt" translatable="false">Semester</string>
+
+    <string-array name="batch_values">
+        <item>-- Batch --</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+    </string-array>
+
+    <string-array name="branch_values">
+        <item>-- Branch --</item>
+        <item>CSE-I</item>
+        <item>CSE-II</item>
+        <item>IT-I</item>
+        <item>IT-II</item>
+        <item>ECE-I</item>
+        <item>ECE-II</item>
+        <item>EEE-I</item>
+        <item>EEE-II</item>
+        <item>ICE</item>
+    </string-array>
+
+    <string-array name="semesters_values">
+        <item>-- Semester --</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
 </resources>

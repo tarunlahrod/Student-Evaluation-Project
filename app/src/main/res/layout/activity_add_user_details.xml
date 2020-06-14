@@ -6,4 +6,210 @@
     android:layout_height="match_parent"
     tools:context=".AddUserDetailsActivity">
 
+    <ScrollView
+        android:id="@+id/containerScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="I am a"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:id="@+id/optionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="student"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
+                    android:textColor="#057DCD"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/postRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <RadioButton
+                    android:id="@+id/studentRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:fontFamily="sans-serif-light"
+                    android:onClick="onRadioButtonClicked"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="student"
+                    android:textSize="24sp" />
+
+                <RadioButton
+                    android:id="@+id/facultyRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_weight="1"
+                    android:onClick="onRadioButtonClicked"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:text="faculty"
+                    android:textSize="24sp" />
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your name and email will be taken from your Google account."
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="#F3410A"
+                android:fontFamily="serif"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:id="@+id/rollEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Roll number"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_margin="5dp"/>
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone number"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_margin="5dp"/>
+
+            <RadioGroup
+                android:id="@+id/genderRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <RadioButton
+                    android:id="@+id/maleRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="Male"
+                    android:checked="true"
+                    android:fontFamily="serif"
+                    android:padding="10dp"
+                    android:textAlignment="center"/>
+
+                <RadioButton
+                    android:id="@+id/femaleRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="Female"
+                    android:fontFamily="serif"
+                    android:padding="10dp"
+                    android:textAlignment="center"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/studentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/studentBatchSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/batch_spinner_prompt"                />
+
+            <Spinner
+                android:id="@+id/studentBranchSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/branch_spinner_prompt"/>
+
+            <Spinner
+                android:id="@+id/studentSemesterSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/semester_spinner_prompt"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/classAdvTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Class Advisor of"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:fontFamily="serif"/>
+
+            <LinearLayout
+                android:id="@+id/classAdvLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp">
+
+                <Spinner
+                    android:id="@+id/classAdvBranchSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:prompt="@string/branch_spinner_prompt"/>
+
+                <Spinner
+                    android:id="@+id/classAdvSemesterSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:prompt="@string/semester_spinner_prompt"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/saveDetailsButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Details" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

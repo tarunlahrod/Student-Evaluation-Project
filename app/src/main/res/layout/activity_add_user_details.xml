@@ -144,71 +144,48 @@
                     android:textAlignment="center"/>
             </RadioGroup>
 
-            <LinearLayout
-                android:id="@+id/studentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/studentBatchSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:prompt="@string/batch_spinner_prompt"                />
-
-            <Spinner
-                android:id="@+id/studentBranchSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:prompt="@string/branch_spinner_prompt"/>
-
-            <Spinner
-                android:id="@+id/studentSemesterSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:prompt="@string/semester_spinner_prompt"/>
-
-            </LinearLayout>
-
-
             <TextView
                 android:id="@+id/classAdvTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Class Advisor of"
+                android:text="I am a student of"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif"/>
+
+            <EditText
+                android:id="@+id/batchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Batch (e.g. 2015, 2016...)"
+                android:inputType="number"
                 android:textSize="16sp"
                 android:padding="10dp"
-                android:fontFamily="serif"/>
+                android:layout_margin="5dp"/>
 
-            <LinearLayout
-                android:id="@+id/classAdvLayout"
+            <Spinner
+                android:id="@+id/branchSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp">
+                android:layout_height="45dp"
+                android:prompt="@string/branch_spinner_prompt"/>
 
-                <Spinner
-                    android:id="@+id/classAdvBranchSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:prompt="@string/branch_spinner_prompt"/>
 
-                <Spinner
-                    android:id="@+id/classAdvSemesterSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:prompt="@string/semester_spinner_prompt"/>
-            </LinearLayout>
+            <EditText
+                android:id="@+id/semesterEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Semester (1 to 8)"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_margin="5dp"/>
 
             <Button
                 android:id="@+id/saveDetailsButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Save Details" />
-
 
         </LinearLayout>
     </ScrollView>

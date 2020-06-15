@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,22 +22,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.w3c.dom.Text;
 
-public class AddUserDetailsActivity extends AppCompatActivity {
-
-    UserProfile user = new UserProfile();
+public class AddUserDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ScrollView containerScrollView;
-    EditText rollEditText, phoneEditText;
-    Spinner studentBatchSpinner, studentBranchSpinner, studentSemesterSpinner, classAdvBranchSpinner, classAdvSemesterSpinner;
-    RadioGroup postRadioGroup;
-    RadioButton radioButton;
+    EditText rollEditText, phoneEditText, batchEditText, semesterEditText;
+    Spinner branchSpinner;
+    RadioGroup postRadioGroup, genderRadioGroup;
+    RadioButton postRadioButton, genderRadioButton;
     Button saveDetailsButton;
     TextView classAdvTextView, optionTextView;
-    LinearLayout studentLayout, classAdvLayout;
 
-    ArrayAdapter<CharSequence> batchAdapter, semesterAdapter, branchAdapter;
+    ArrayAdapter<CharSequence> branchAdapter;
+
+    // entered values
+    String user_name, user_email, user_roll, user_phone, user_gender, user_batch, user_branch, user_semester, user_post;
+
+    String branchValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,61 +55,128 @@ public class AddUserDetailsActivity extends AppCompatActivity {
         rollEditText = (EditText) findViewById(R.id.rollEditText);
         phoneEditText = (EditText) findViewById(R.id.phoneEditText);
         postRadioGroup = (RadioGroup) findViewById(R.id.postRadioGroup);
-        studentBatchSpinner = (Spinner) findViewById(R.id.studentBatchSpinner);
-        studentBranchSpinner = (Spinner) findViewById(R.id.studentBranchSpinner);
-        studentSemesterSpinner = (Spinner) findViewById(R.id.studentSemesterSpinner);
-        classAdvBranchSpinner = (Spinner) findViewById(R.id.classAdvBranchSpinner);
-        classAdvSemesterSpinner = (Spinner) findViewById(R.id.classAdvSemesterSpinner);
-        studentLayout = (LinearLayout) findViewById(R.id.studentLayout);
-        classAdvLayout = (LinearLayout) findViewById(R.id.classAdvLayout);
+        genderRadioGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
+        batchEditText = (EditText) findViewById(R.id.batchEditText);
+        branchSpinner = (Spinner) findViewById(R.id.branchSpinner);
+        semesterEditText = (EditText) findViewById(R.id.semesterEditText);
         classAdvTextView = (TextView) findViewById(R.id.classAdvTextView);
         saveDetailsButton = (Button) findViewById(R.id.saveDetailsButton);
 
-        // adding the resource arrays to the adapters
-        batchAdapter = ArrayAdapter.createFromResource(this, R.array.batch_values, android.R.layout.simple_spinner_item);
+        int radioId = postRadioGroup.getCheckedRadioButtonId();
+        postRadioButton = (RadioButton) findViewById(radioId);
+        user_post = postRadioButton.getText().toString();
+
+        // adding the resource arrays to the adapter
         branchAdapter = ArrayAdapter.createFromResource(this, R.array.branch_values, android.R.layout.simple_spinner_item);
-        semesterAdapter = ArrayAdapter.createFromResource(this, R.array.semesters_values, android.R.layout.simple_spinner_item);
-
-        // adding the dropdown view to the adapters
-        batchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        semesterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        branchSpinner.setAdapter(branchAdapter);
+        branchSpinner.setOnItemSelectedListener(this);
 
-        // adding the adapters to the spinners
-        studentBatchSpinner.setAdapter(batchAdapter);
-        studentBranchSpinner.setAdapter(branchAdapter);
-        studentSemesterSpinner.setAdapter(semesterAdapter);
-        classAdvBranchSpinner.setAdapter(branchAdapter);
-        classAdvSemesterSpinner.setAdapter(semesterAdapter);
+        saveDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(allDetailsAreFilledCorrectly()) {
 
-        // remove faculty elements initially
-        classAdvTextView.setVisibility(View.GONE);
-        classAdvLayout.setVisibility(View.GONE);
+                    // add user details to the user profile object
+                    FirebaseUser firebaseUser;
+                    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    user_name = firebaseUser.getDisplayName();
+                    user_email = firebaseUser.getEmail();
+
+                    UserProfile userProfile = new UserProfile(user_roll, user_name, user_gender, user_phone, user_email,user_branch, user_semester, user_batch, user_post);
+                    userProfile.addUserToFirebase();
+                    Toast.makeText(getApplicationContext(), "Details updated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void onRadioButtonClicked(View view) {
         int radioId = postRadioGroup.getCheckedRadioButtonId();
-        radioButton = (RadioButton) findViewById(radioId);
-        String post = radioButton.getText().toString();
+        postRadioButton = (RadioButton) findViewById(radioId);
+        user_post = postRadioButton.getText().toString();
 
-        optionTextView.setText(post);
+        optionTextView.setText(user_post);
 
-        if(post.equals("student")) {
-            // remove faculty elements
-            classAdvTextView.setVisibility(View.GONE);
-            classAdvLayout.setVisibility(View.GONE);
-
-            // add student elements
-            studentLayout.setVisibility(View.VISIBLE);
+        if(user_post.equals("student")) {
+            classAdvTextView.setText("I am a student of");
         }
         else {
-            // remove student elements
-            studentLayout.setVisibility(View.GONE);
-
-            // add faculty elements
-            classAdvTextView.setVisibility(View.VISIBLE);
-            classAdvLayout.setVisibility(View.VISIBLE);
-
+            classAdvTextView.setText("I am Class Advisor of");
         }
+    }
+
+    public void generateToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean allDetailsAreFilledCorrectly() {
+
+        if(rollEditText.getText().toString().isEmpty()) {
+            generateToast("Enter roll no");
+            return false;
+        }
+        else {
+            user_roll = rollEditText.getText().toString();
+        }
+
+        if(phoneEditText.getText().toString().length() != 10) {
+            generateToast("Enter phone number correctly");
+            return false;
+        }
+        else {
+            user_phone = phoneEditText.getText().toString();
+        }
+
+        // getting user's gender
+        int genderRadioId = genderRadioGroup.getCheckedRadioButtonId();
+        genderRadioButton = findViewById(genderRadioId);
+        user_gender = genderRadioButton.getText().toString();
+
+
+        String batch = batchEditText.getText().toString();
+        if(batch.isEmpty()) {
+            generateToast("Enter a batch");
+            return false;
+        }
+
+        int batchYear = Integer.parseInt(batch);
+        if(batchYear < 2016 || batchYear > 2020) {
+            generateToast("Enter a valid batch");
+            return false;
+        }
+        else {
+            user_batch = batch;
+        }
+
+        String semester = semesterEditText.getText().toString();
+        int semesterValue = Integer.parseInt(semester);
+        if(semesterValue < 1 || semesterValue > 8) {
+            generateToast("Enter a valid semester");
+            return false;
+        }
+        else {
+            user_semester = semester;
+        }
+
+        if(branchValue.equals("-- Branch --")) {
+            generateToast("Select a branch");
+            return false;
+        }
+        else {
+            user_branch = branchValue;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        branchValue = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

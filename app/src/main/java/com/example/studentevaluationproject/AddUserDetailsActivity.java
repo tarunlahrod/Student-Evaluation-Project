@@ -86,6 +86,10 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
                     UserProfile userProfile = new UserProfile(user_roll, user_name, user_gender, user_phone, user_email,user_branch, user_semester, user_batch, user_post);
                     userProfile.addUserToFirebase();
                     Toast.makeText(getApplicationContext(), "Details updated", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(AddUserDetailsActivity.this, SignedInMainMenuActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

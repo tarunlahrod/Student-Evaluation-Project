@@ -40,11 +40,26 @@ public class UserProfile {
 
         DatabaseReference thisUser;
 
-        if(post.equals("student"))
-            thisUser = mDatabase.child("student").child(roll_no);
-        else
-            thisUser = mDatabase.child("faculty").child(roll_no);
+        if(post.equals("student")) {
+            thisUser = mDatabase.child("class").child(classCode).child("student").child(roll_no);
+        }
+        else {
+            // add the faculty to the concerned class as the class advisor
+            DatabaseReference thisUser2 = mDatabase.child("class").child(classCode).child("class advisor").child(roll_no);
+            thisUser2.child("name").setValue(name);
+            thisUser2.child("post").setValue(post);
+            thisUser2.child("roll_no").setValue(roll_no);
+            thisUser2.child("email").setValue(email);
+            thisUser2.child("phone").setValue(phone_no);
+            thisUser2.child("gender").setValue(gender);
+            thisUser2.child("branch").setValue(branch);
+            thisUser2.child("semester").setValue(semester);
+            thisUser2.child("batch").setValue(batch);
+            thisUser2.child("class_code").setValue(classCode);
 
+            // add the faculty to the faculty
+            thisUser = mDatabase.child("faculty").child(roll_no);
+        }
         thisUser.child("name").setValue(name);
         thisUser.child("post").setValue(post);
         thisUser.child("roll_no").setValue(roll_no);

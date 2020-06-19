@@ -2,9 +2,12 @@ package com.example.studentevaluationproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,10 +40,15 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
     Button saveDetailsButton;
     TextView classAdvTextView, optionTextView;
 
+    private ProgressDialog progressDialog;
+    private int timer = 0;
+    Handler handler;
+    Runnable run;
+
     ArrayAdapter<CharSequence> branchAdapter;
 
     // entered values
-    String user_name, user_email, user_roll, user_phone, user_gender, user_batch, user_branch, user_semester, user_post;
+    String user_uid, user_name, user_email, user_roll, user_phone, user_gender, user_batch, user_branch, user_semester, user_post;
 
     String branchValue;
 
@@ -82,9 +90,12 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
                     firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     user_name = firebaseUser.getDisplayName();
                     user_email = firebaseUser.getEmail();
+                    user_uid = firebaseUser.getUid();
 
-                    UserProfile userProfile = new UserProfile(user_roll, user_name, user_gender, user_phone, user_email,user_branch, user_semester, user_batch, user_post);
+                    UserProfile userProfile = UserProfile.getInstance();
+                    userProfile.addUserProfile(user_uid, user_roll, user_name, user_gender, user_phone, user_email,user_branch, user_semester, user_batch, user_post);
                     userProfile.addUserToFirebase();
+
                     Toast.makeText(getApplicationContext(), "Details updated", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(AddUserDetailsActivity.this, SignedInMainMenuActivity.class);
@@ -145,7 +156,7 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
         }
 
         int batchYear = Integer.parseInt(batch);
-        if(batchYear < 2016 || batchYear > 2020) {
+        if(batchYear < 2015 || batchYear > 2020) {
             generateToast("Enter a valid batch");
             return false;
         }
@@ -154,6 +165,10 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
         }
 
         String semester = semesterEditText.getText().toString();
+        if(semester.isEmpty()) {
+            generateToast("Enter a semester");
+            return false;
+        }
         int semesterValue = Integer.parseInt(semester);
         if(semesterValue < 1 || semesterValue > 8) {
             generateToast("Enter a valid semester");

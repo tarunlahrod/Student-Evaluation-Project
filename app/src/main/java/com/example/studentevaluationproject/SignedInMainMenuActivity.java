@@ -6,12 +6,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +29,13 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     private TextView textView;
     private ConstraintLayout constraintLayout;
 
-    private ProgressDialog progressDialog;
-
     FirebaseUser user;
     DatabaseReference rootRef, retrieveRef, uidRef;
 
     String u_name, u_email, u_gender, u_phone, u_branch, u_batch, u_semester, u_roll_no, u_post, u_class_code;
     private String uid;
+
+    UserProfile userProfile = UserProfile.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,30 +60,21 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         Snackbar snackbar = Snackbar.make(constraintLayout, "Signed in as " + u_name, Snackbar.LENGTH_SHORT);
         snackbar.show();
 
+        // Check if user just added to firebase, then save its data to Shared Preferences
+        if(userProfile.getUserJustAdded()) {
+            saveDataToSharedPrefs();
+        }
 
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        uidRef = rootRef.child("all_users").child(uid);
 
         // check if the current user exists in the database
         rootRef = FirebaseDatabase.getInstance().getReference();
         uidRef = rootRef.child("all_users").child(uid);
 
-        new CountDownTimer(3000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.i("timer ticking down", "tick!");
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();
-
         uidRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.i("key of dataSnapshot", String.valueOf(dataSnapshot.getChildrenCount()));
 
                 if(!dataSnapshot.exists()) {
                     // go to add user activity
@@ -111,6 +101,8 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                removeSharedPreferences();
+
                 Intent intent = new Intent(SignedInMainMenuActivity.this, MainActivity.class);
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "Signed Out", Toast.LENGTH_SHORT).show();
@@ -136,97 +128,75 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     }
 
     public void showUserProfileData() {
-        UserProfile user = UserProfile.getInstance();
 
-        Log.i("name", user.getName());
-        Log.i("roll", user.getRoll_no());
-        Log.i("phone", user.getPhone_no());
-        Log.i("email", user.getEmail());
-        Log.i("gender", user.getGender());
-        Log.i("batch", user.getBatch());
-        Log.i("branch", user.getBranch());
-        Log.i("semester", user.getSemester());
+        userProfile = UserProfile.getInstance();
+
+        Log.i("name", userProfile.getName());
+        Log.i("post", userProfile.getPost());
+        Log.i("roll", userProfile.getRoll_no());
+        Log.i("phone", userProfile.getPhone_no());
+        Log.i("email", userProfile.getEmail());
+        Log.i("gender", userProfile.getGender());
+        Log.i("batch", userProfile.getBatch());
+        Log.i("branch", userProfile.getBranch());
+        Log.i("semester", userProfile.getSemester());
+    }
+
+    public void saveDataToSharedPrefs() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserProfileDatabase", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        userProfile = UserProfile.getInstance();
+
+        editor.putString("user_name", userProfile.getName());
+        editor.putString("user_roll", userProfile.getRoll_no());
+        editor.putString("user_phone", userProfile.getPhone_no());
+        editor.putString("user_email", userProfile.getEmail());
+        editor.putString("user_batch", userProfile.getBatch());
+        editor.putString("user_branch", userProfile.getBranch());
+        editor.putString("user_semester", userProfile.getSemester());
+        editor.putString("user_gender", userProfile.getGender());
+        editor.putString("user_post", userProfile.getPost());
+        editor.putString("user_class_code", userProfile.getClass_code());
+        editor.putString("user_uid", uid);
+
+        editor.apply();
+        // set userJustAdded to false
+        userProfile.setUserJustAdded(false);
+
+        Log.i("saveDataToSharedPrefs", "Data saved.");
     }
 
     public void updateUserProfileInstance() {
 
-        UserProfile user = UserProfile.getInstance();
+        if(userProfile.getSemester().isEmpty()) {
 
-        if(user.getSemester().isEmpty()){
+            Log.i("Retrieving data from", "shared preferences");
 
-            Log.i("data from", "firebase");
+            SharedPreferences sP = getSharedPreferences("UserProfileDatabase", MODE_PRIVATE);
 
-            retrieveRef = rootRef.child("all_users").child(uid);
-            Log.i("getting close to hell", retrieveRef.toString());
+            userProfile.setName(sP.getString("user_name", ""));
+            userProfile.setRoll_no(sP.getString("user_roll", ""));
+            userProfile.setPhone_no(sP.getString("user_phone", ""));
+            userProfile.setEmail(sP.getString("user_email", ""));
+            userProfile.setBatch(sP.getString("user_batch", ""));
+            userProfile.setBranch(sP.getString("user_branch", ""));
+            userProfile.setSemester(sP.getString("user_semester", ""));
+            userProfile.setGender(sP.getString("user_gender", ""));
+            userProfile.setPost(sP.getString("user_post", ""));
+            userProfile.setClass_code(sP.getString("user_class_code", ""));
+            userProfile.setUid(sP.getString("user_uid", ""));
 
-            retrieveRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    Log.i("dataSnapshot retriever", dataSnapshot.getValue().toString());
-
-                    u_roll_no = dataSnapshot.child("roll_no").getValue().toString();
-                    u_post = dataSnapshot.child("post").getValue().toString();
-                    u_class_code = dataSnapshot.child("class_code").getValue().toString();
-
-                    Log.i("roll", u_roll_no);
-                    Log.i("post", u_post);
-                    Log.i("class code", u_class_code);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-
-//            ProgressBar progressBar;
-//            progressBar = new ProgressBar(SignedInMainMenuActivity.this);
-//
-//             wait till all the three retrieved values are not null
-//            while( (u_roll_no == null) || (u_post == null) || (u_class_code == null) ) {
-//                Log.i("tag", "waiting for the data to download");
-//                progressBar.setVisibility(View.VISIBLE);
-//            }
-//            progressBar.setVisibility(View.INVISIBLE);
-
-            Log.i("I am", "here");
-            System.out.println(u_post);
-
-            // retrieving the rest of the user data
-            if(u_post.equals("student")) {
-                retrieveRef = rootRef.child("class").child(u_class_code).child("student").child(u_roll_no);
-            }
-            else {
-                retrieveRef = rootRef.child("faculty").child(u_roll_no);
-            }
-            retrieveRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    u_name = dataSnapshot.child("name").getValue().toString();
-                    u_batch = dataSnapshot.child("batch").getValue().toString();
-                    u_phone = dataSnapshot.child("phone").getValue().toString();
-                    u_gender = dataSnapshot.child("gender").getValue().toString();
-                    u_email = dataSnapshot.child("email").getValue().toString();
-                    u_branch = dataSnapshot.child("branch").getValue().toString();
-                    u_semester = dataSnapshot.child("semester").getValue().toString();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            user.addUserProfile(uid, u_roll_no, u_name, u_gender, u_phone, u_email, u_branch, u_semester, u_batch, u_post);
+            Log.i("SP testing", sP.getString("user_name", "not working"));
+            Log.i("Load data from SP", "Data loaded from Shared Preferences");
         }
         else {
-
-            Log.i("data from", "User instance");
-
+            Log.i("Retrieving data from", "User instance");
         }
+    }
 
+    public void removeSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserProfileDatabase", MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
     }
 }

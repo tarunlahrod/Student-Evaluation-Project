@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     private TextView nameTV, postTV, rollTV, phoneTV, genderTV, batchTV, branchTV, semesterTV, emailTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

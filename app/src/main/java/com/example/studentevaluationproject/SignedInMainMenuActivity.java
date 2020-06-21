@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,14 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignedInMainMenuActivity extends AppCompatActivity {
 
-    private Button signOutButton, addDetailsButton, showLogsButton;
+    private Button signOutButton, addDetailsButton, showLogsButton, evaluationButton;
     private TextView textView;
     private ConstraintLayout constraintLayout;
 
     FirebaseUser user;
-    DatabaseReference rootRef, retrieveRef, uidRef;
+    DatabaseReference rootRef, uidRef;
 
-    String u_name, u_email, u_gender, u_phone, u_branch, u_batch, u_semester, u_roll_no, u_post, u_class_code;
+    String u_name, u_email;
     private String uid;
 
     UserProfile userProfile = UserProfile.getInstance();
@@ -48,6 +47,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         signOutButton = (Button) findViewById(R.id.signOutButton);
         addDetailsButton = (Button) findViewById(R.id.addDetailsButton);
         showLogsButton = (Button) findViewById(R.id.showLogsButton);
+        evaluationButton = (Button) findViewById(R.id.evaluationButton);
         textView = (TextView) findViewById(R.id.textView);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
@@ -97,7 +97,6 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             }
         });
 
-
         // Sign Out button onClickListener
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,10 +120,26 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             }
         });
 
+        // Show logs OnClickListener
         showLogsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showUserProfileData();
+            }
+        });
+
+        // Evaluations button onClickListener
+        evaluationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(userProfile.getPost().equals("student")) {
+                    startActivity(new Intent(SignedInMainMenuActivity.this, StudentEvaluationActivity.class));
+                }
+                else {
+                    startActivity(new Intent(SignedInMainMenuActivity.this, FacultyEvaluationActivity.class));
+                }
+
             }
         });
     }
@@ -143,8 +158,6 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.action_profile) {
             startActivity(new Intent(SignedInMainMenuActivity.this, UserProfileActivity.class));
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -210,6 +223,11 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
 
             Log.i("SP testing", sP.getString("user_name", "not working"));
             Log.i("Load data from SP", "Data loaded from Shared Preferences");
+
+            if(userProfile.getSemester().isEmpty()) {
+                // Now go and retrieve data from the firebase database, Meh!
+                
+            }
         }
         else {
             Log.i("Retrieving data from", "User instance");

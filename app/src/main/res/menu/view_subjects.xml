@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_view_subjects"
+        android:icon="@drawable/baseline_menu_book_white_24dp"
+        android:title="View Subjects"
+        app:showAsAction="always"/>
+</menu>

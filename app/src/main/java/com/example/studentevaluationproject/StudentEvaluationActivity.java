@@ -25,9 +25,8 @@ public class StudentEvaluationActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_add_subject) {
+        if(item.getItemId() == R.id.action_view_subjects) {
             startActivity(new Intent(StudentEvaluationActivity.this, StudentSubjectsActivity.class));
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }

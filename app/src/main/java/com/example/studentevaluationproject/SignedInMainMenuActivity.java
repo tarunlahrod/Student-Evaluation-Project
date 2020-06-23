@@ -33,7 +33,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference rootRef, uidRef;
 
-    String u_name, u_email;
+    String u_name, u_email, u_class_code, u_post, u_roll, u_batch, u_semester, u_branch, u_phone, u_gender;
     private String uid;
 
     UserProfile userProfile = UserProfile.getInstance();
@@ -79,6 +79,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(!dataSnapshot.exists()) {
+
                     // go to add user activity
                     Intent intent = new Intent(getApplicationContext(), AddUserDetailsActivity.class);
                     startActivity(intent);
@@ -225,8 +226,32 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             Log.i("Load data from SP", "Data loaded from Shared Preferences");
 
             if(userProfile.getSemester().isEmpty()) {
-                // Now go and retrieve data from the firebase database, Meh!
-                
+
+//                // Now go and retrieve data from the firebase database, Meh!
+//                Log.i("Retrieving data from", "Firebase Database");
+//
+//                DatabaseReference mDB;
+//                if(u_post.equals("student")) {
+//                    mDB = rootRef.child("class").child(u_class_code).child("student").child(u_roll);
+//                    mDB.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            u_phone = dataSnapshot.child("phone").getValue().toString();
+//                            u_gender = dataSnapshot.child("gender").getValue().toString();
+//                            u_batch = dataSnapshot.child("batch").getValue().toString();
+//                            u_branch = dataSnapshot.child("branch").getValue().toString();
+//                            u_semester = dataSnapshot.child("semester").getValue().toString();
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    userProfile.addUserProfile(uid, u_roll, u_name, u_gender, u_phone, u_email, u_branch, u_semester, u_batch, u_post);
+//                    saveDataToSharedPrefs();
+//                    Log.i("Retrieved data from", "Firebase Database");
+//                }
             }
         }
         else {

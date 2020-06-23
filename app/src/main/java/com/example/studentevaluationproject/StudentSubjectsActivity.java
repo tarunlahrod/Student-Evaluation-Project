@@ -4,11 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,13 +16,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import static java.util.Collections.sort;
 
-public class FacultySubjectsActivity extends AppCompatActivity {
+public class StudentSubjectsActivity extends AppCompatActivity {
 
     ArrayList<String> subjectList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
@@ -42,11 +37,11 @@ public class FacultySubjectsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faculty_subjects);
+        setContentView(R.layout.activity_student_subjects);
         getSupportActionBar().setTitle("Subjects");
 
-        messageTextView = (TextView) findViewById(R.id.messageTextView);
-        subjectListView = (ListView) findViewById(R.id.subjectListView);
+        messageTextView = (TextView) findViewById(R.id.messageTextView_student);
+        subjectListView = (ListView) findViewById(R.id.subjectListView_student);
 
         user_details_message = "Class: " + userProfile.getBranch() + "\n(" + userProfile.getSemester() + " semester)";
         messageTextView.setText(user_details_message);
@@ -60,7 +55,6 @@ public class FacultySubjectsActivity extends AppCompatActivity {
         subRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.i("datasnapshot", dataSnapshot.toString());
                 String value = dataSnapshot.child("name").getValue(String.class);
                 subjectList.add(value);
                 sort(subjectList);
@@ -87,20 +81,6 @@ public class FacultySubjectsActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_subject, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_add_subject) {
-            startActivity(new Intent(FacultySubjectsActivity.this, AddSubjectsActivity.class));
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

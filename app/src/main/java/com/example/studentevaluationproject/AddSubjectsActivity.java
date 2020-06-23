@@ -67,6 +67,7 @@ public class AddSubjectsActivity extends AppCompatActivity {
         }
         else {
             sub_code = subjectCodeEditText.getText().toString();
+            sub_code = sub_code.toUpperCase();
         }
 
         // Subject credits validation
@@ -90,7 +91,7 @@ public class AddSubjectsActivity extends AppCompatActivity {
             return false;
         }
         else {
-            sub_short_name = subjectShortNameEditText.getText().toString();
+            sub_short_name = subjectShortNameEditText.getText().toString().toUpperCase();
         }
 
         // All details are correct, return true

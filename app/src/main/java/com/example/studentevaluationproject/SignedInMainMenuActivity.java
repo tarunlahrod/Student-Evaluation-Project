@@ -42,7 +42,7 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in_main_menu);
-        getSupportActionBar().setTitle("User Menu");
+        getSupportActionBar().setTitle("Main Menu");
 
         signOutButton = (Button) findViewById(R.id.signOutButton);
         addDetailsButton = (Button) findViewById(R.id.addDetailsButton);

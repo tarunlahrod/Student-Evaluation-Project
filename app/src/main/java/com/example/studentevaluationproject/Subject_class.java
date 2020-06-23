@@ -47,6 +47,7 @@ public class Subject_class {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 subjectExists = dataSnapshot.exists();
+                Log.i("existence checker", "I'm here");
             }
 
             @Override
@@ -55,12 +56,10 @@ public class Subject_class {
             }
         });
         String msg;
-        if(subjectExists)
-            msg = "true";
-        else
-            msg = "false";
-
+        if(subjectExists) msg = "true";
+        else msg = "false";
         Log.i("subjectExists", msg);
+
         return subjectExists;
     }
 

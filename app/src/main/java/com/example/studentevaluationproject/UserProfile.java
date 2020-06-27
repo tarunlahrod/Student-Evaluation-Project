@@ -74,6 +74,9 @@ public class UserProfile {
 
         if(post.equals("student")) {
             thisUser = mDatabase.child("class").child(class_code).child("student").child(roll_no);
+
+            // add student to evaluation
+            mDatabase.child("class").child(class_code).child("evaluation").child(roll_no).child("name").setValue(name);
         }
         else {
             // add the faculty to the concerned class as the class advisor
@@ -89,6 +92,9 @@ public class UserProfile {
             thisUser2.child("semester").setValue(semester);
             thisUser2.child("batch").setValue(batch);
             thisUser2.child("class_code").setValue(class_code);
+
+            // add the initial evaluation status to false of faculty's concerned class
+            mDatabase.child("class").child(class_code).child("evaluation_completed").setValue(false);
 
             // add the faculty to the faculty
             thisUser = mDatabase.child("faculty").child(roll_no);

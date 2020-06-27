@@ -156,7 +156,7 @@ public class AddUserDetailsActivity extends AppCompatActivity implements Adapter
         }
 
         int batchYear = Integer.parseInt(batch);
-        if(batchYear < 2015 || batchYear > 2020) {
+        if(batchYear < 2015 || batchYear > 2024) {
             generateToast("Enter a valid batch");
             return false;
         }

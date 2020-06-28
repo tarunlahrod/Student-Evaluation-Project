@@ -79,7 +79,7 @@ public class FacultyViewEvaluationActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), nameList.get(position) + "'s marks shows up", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(FacultyViewEvaluationActivity.this, MarkStudentEvaluationActivity.class);
-                intent.putExtra("roll_no", parent.getItemIdAtPosition(position));
+                intent.putExtra("roll_no", parent.getItemAtPosition(position).toString());
                 startActivity(intent);
             }
         });

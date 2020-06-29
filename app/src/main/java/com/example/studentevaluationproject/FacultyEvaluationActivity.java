@@ -49,6 +49,13 @@ public class FacultyEvaluationActivity extends AppCompatActivity {
             }
         });
 
+        updateEvaluationAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FacultyEvaluationActivity.this, UpdateAllEvaluationActivity.class));
+            }
+        });
+
         updateEvaluationSBS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

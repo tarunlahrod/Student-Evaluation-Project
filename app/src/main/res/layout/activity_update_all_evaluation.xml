@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".UpdateSBSEvaluation">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paste the Evaluation data"
+        android:textSize="24sp"/>
+
+    <EditText
+        android:id="@+id/evaluation_copied_data_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Paste the CSV copied data here"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:gravity="top|left"
+        android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/addEvaluationToFirebaseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Add evaluation to firebase" />
+
+</LinearLayout>

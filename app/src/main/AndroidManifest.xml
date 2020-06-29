@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FacultyViewEvaluationActivity"></activity>
+        <activity android:name=".UpdateAllEvaluationActivity"></activity>
+        <activity android:name=".FacultyViewEvaluationActivity" />
         <activity android:name=".MarkStudentEvaluationActivity" />
         <activity android:name=".UpdateSBSEvaluation" />
         <activity android:name=".StudentSubjectsActivity" />

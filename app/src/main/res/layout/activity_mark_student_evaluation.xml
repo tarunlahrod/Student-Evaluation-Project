@@ -4,7 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".MarkStudentEvaluationActivity">
 
+    <TextView
+        android:id="@+id/evaluationOutputTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

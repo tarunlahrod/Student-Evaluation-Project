@@ -18,21 +18,22 @@ import java.util.ArrayList;
 public class MarkStudentEvaluationActivity extends AppCompatActivity {
 
     DatabaseReference rootRef, currentRef;
-    String roll;
+    String roll, name;
 
     ArrayList<String> sub_code = new ArrayList<>(1);
     ArrayList<String> sub_score = new ArrayList<>(1);
 
     UserProfile userProfile;
 
-    private TextView evaluationOutputTextView;
+    private TextView evaluationOutputTextView, evaluationStudentNameTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_student_evaluation);
 
         evaluationOutputTextView = (TextView) findViewById(R.id.evaluationOutputTextView);
-
+        evaluationStudentNameTV = (TextView) findViewById(R.id.evaluationStudentNameTV);
         rootRef = FirebaseDatabase.getInstance().getReference();
 
         Intent intent = getIntent();
@@ -46,14 +47,10 @@ public class MarkStudentEvaluationActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    System.out.println("Here\n");
-
-                    Log.i("key", snapshot.getKey().toString());
-                    Log.i("value", snapshot.getValue().toString());
                     sub_code.add(snapshot.getKey().toString());
                     sub_score.add(snapshot.getValue().toString());
                 }
+                displayData();
             }
 
             @Override
@@ -62,20 +59,22 @@ public class MarkStudentEvaluationActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("sub_code.size() = " + sub_code.size());
+    }
+
+    private void displayData() {
 
         StringBuilder toShow = new StringBuilder();
 
         for(int i = 0; i < sub_code.size(); i++) {
-
-            System.out.println(sub_code.get(i));
-            System.out.println(sub_score.get(i));
-
-            toShow.append(sub_code.get(i)).append(": ").append(sub_score.get(i)).append("\n");
+            if(sub_code.get(i).equals("name")) {
+                name = sub_score.get(i);
+            }
+            else {
+                toShow.append(sub_code.get(i)).append(": ").append(sub_score.get(i)).append("\n");
+            }
         }
 
-        Log.i("final output", toShow.toString());
-
+        evaluationStudentNameTV.setText(name);
         evaluationOutputTextView.setText(toShow.toString());
     }
 }

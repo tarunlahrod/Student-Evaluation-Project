@@ -5,7 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:orientation="vertical"
     tools:context=".MarkStudentEvaluationActivity">
+
+
+    <TextView
+        android:id="@+id/evaluationStudentNameTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="TextView"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#888888"/>
+
 
     <TextView
         android:id="@+id/evaluationOutputTextView"
@@ -13,7 +32,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="viewStart"
         android:text="TextView"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:lineSpacingExtra="5dp"
         android:layout_marginTop="10dp"/>
 
 </LinearLayout>

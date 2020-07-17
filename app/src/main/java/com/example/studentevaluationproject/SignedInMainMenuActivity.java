@@ -30,6 +30,8 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     private TextView textView;
     private ConstraintLayout constraintLayout;
 
+    boolean userPresent = false;
+
     FirebaseUser user;
     DatabaseReference rootRef, uidRef;
 
@@ -50,6 +52,8 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         evaluationButton = (Button) findViewById(R.id.evaluationButton);
         textView = (TextView) findViewById(R.id.textView);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+
+        updateButtonStatus();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         u_name = user.getDisplayName();
@@ -89,6 +93,8 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
                     Toast.makeText(SignedInMainMenuActivity.this, "User already present", Toast.LENGTH_SHORT).show();
                     updateUserProfileInstance();
                     showUserProfileData();
+                    userPresent = true;
+                    updateButtonStatus();
                 }
             }
 
@@ -262,5 +268,16 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
     public void removeSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserProfileDatabase", MODE_PRIVATE);
         sharedPreferences.edit().clear().apply();
+    }
+
+    public void updateButtonStatus() {
+        if(!userPresent) {
+            addDetailsButton.setEnabled(false);
+            evaluationButton.setEnabled(false);
+        }
+        else {
+            addDetailsButton.setEnabled(true);
+            evaluationButton.setEnabled(true);
+        }
     }
 }

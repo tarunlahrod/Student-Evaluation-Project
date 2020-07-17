@@ -12,7 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Paste the Evaluation data"
+        android:gravity="center"
         android:textSize="24sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#888888"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#FFF3410A"
+        android:text="CSV Format \n(roll no, name, sub_1 code, ... , sub_N code)"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#888888"/>
 
     <EditText
         android:id="@+id/evaluation_copied_data_EditText"

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#00A4BC</color>
     <color name="colorPrimaryDark">#007D8F</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#EC5993</color>
 
     <color name="student_evaluation_present">#378F6B</color>
     <color name="student_evaluation_absent">#B9F4DC</color>

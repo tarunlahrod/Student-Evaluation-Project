@@ -4,12 +4,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_removebg"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_removebg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateAllEvaluationActivity"></activity>
+        <activity android:name=".UpdateAttendanceActivity"></activity>
+        <activity android:name=".UpdateAllEvaluationActivity" />
         <activity android:name=".FacultyViewEvaluationActivity" />
         <activity android:name=".MarkStudentEvaluationActivity" />
         <activity android:name=".UpdateSBSEvaluation" />

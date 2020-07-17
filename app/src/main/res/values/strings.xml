@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StudentEvaluationProject</string>
+    <string name="app_name">Evaluate Me</string>
     <string name="batch_spinner_prompt" translatable="false">Batch</string>
     <string name="branch_spinner_prompt" translatable="false">Branch</string>
     <string name="semester_spinner_prompt" translatable="false">Semester</string>

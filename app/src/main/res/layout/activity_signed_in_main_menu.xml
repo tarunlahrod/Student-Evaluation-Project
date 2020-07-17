@@ -24,54 +24,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
-            android:layout_rowWeight="1"
             android:layout_column="0"
-            android:layout_columnSpan="2"
+            android:layout_rowWeight="5"
             android:layout_columnWeight="1"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
             android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/signOutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:text="Sign Out" />
+<!--        <Button-->
+<!--            android:id="@+id/addDetailsButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="1"-->
+<!--            android:layout_rowWeight="1"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:text="Add Details" />-->
 
-        <Button
-            android:id="@+id/addDetailsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:text="Add Details" />
-
-        <Button
-            android:id="@+id/showLogsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:text="Show Logs" />
+<!--        <Button-->
+<!--            android:id="@+id/showLogsButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="2"-->
+<!--            android:layout_rowWeight="1"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:text="Show Logs" />-->
 
         <Button
             android:id="@+id/evaluationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_rowWeight="3"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:text="Evaluations" />
+
+        <Button
+            android:id="@+id/attendanceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_rowWeight="3"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:text="Attendance" />
+
+        <Button
+            android:id="@+id/signOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_rowWeight="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:text="Sign Out" />
 
     </GridLayout>
 

@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignedInMainMenuActivity extends AppCompatActivity {
 
-    private Button signOutButton, addDetailsButton, showLogsButton, evaluationButton;
+    private Button signOutButton, addDetailsButton, evaluationButton, attendanceButton;
     private TextView textView;
     private ConstraintLayout constraintLayout;
 
@@ -47,11 +47,13 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Main Menu");
 
         signOutButton = (Button) findViewById(R.id.signOutButton);
-        addDetailsButton = (Button) findViewById(R.id.addDetailsButton);
-        showLogsButton = (Button) findViewById(R.id.showLogsButton);
         evaluationButton = (Button) findViewById(R.id.evaluationButton);
+        attendanceButton = (Button) findViewById(R.id.attendanceButton);
         textView = (TextView) findViewById(R.id.textView);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+
+        // removed Add details button from the Main Menu, though all the implementation is still intact in this code
+//        addDetailsButton = (Button) findViewById(R.id.addDetailsButton);
 
         updateButtonStatus();
 
@@ -117,23 +119,15 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             }
         });
 
-        // Add details button onClickListener
-        addDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignedInMainMenuActivity.this, AddUserDetailsActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        // Show logs OnClickListener
-        showLogsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUserProfileData();
-            }
-        });
+//        // Add details button onClickListener
+//        addDetailsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SignedInMainMenuActivity.this, AddUserDetailsActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         // Evaluations button onClickListener
         evaluationButton.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +141,19 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
                     startActivity(new Intent(SignedInMainMenuActivity.this, FacultyEvaluationActivity.class));
                 }
 
+            }
+        });
+
+        // Attendance button onClickListener
+        attendanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userProfile.getPost().equals("student")) {
+
+                }
+                else {
+                    startActivity(new Intent(SignedInMainMenuActivity.this, UpdateAttendanceActivity.class));
+                }
             }
         });
     }
@@ -272,12 +279,14 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
 
     public void updateButtonStatus() {
         if(!userPresent) {
-            addDetailsButton.setEnabled(false);
+//            addDetailsButton.setEnabled(false);
             evaluationButton.setEnabled(false);
+            attendanceButton.setEnabled(false);
         }
         else {
-            addDetailsButton.setEnabled(true);
+//            addDetailsButton.setEnabled(true);
             evaluationButton.setEnabled(true);
+            attendanceButton.setEnabled(true);
         }
     }
 }

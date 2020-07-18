@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/name_attendance_adapter_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name"
+            android:gravity="center|left"
+            android:textColor="#272727"
+            android:layout_weight="1"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/roll_attendance_adapter_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#737373"
+            android:gravity="center|left"
+            android:text="Roll Number"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/attendance_attendance_adapter_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Attendance"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_weight="2"/>
+
+    <TextView
+        android:id="@+id/percentage_attendance_adapter_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Percentage"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_weight="2"/>
+</LinearLayout>

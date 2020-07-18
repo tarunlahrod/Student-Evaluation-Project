@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignedInMainMenuActivity extends AppCompatActivity {
 
-    private Button signOutButton, addDetailsButton, evaluationButton, attendanceButton;
+    private Button signOutButton, addDetailsButton, evaluationButton, updateAttendanceButton, viewAttendanceButton;
     private TextView textView;
     private ConstraintLayout constraintLayout;
 
@@ -48,7 +48,8 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
 
         signOutButton = (Button) findViewById(R.id.signOutButton);
         evaluationButton = (Button) findViewById(R.id.evaluationButton);
-        attendanceButton = (Button) findViewById(R.id.attendanceButton);
+        viewAttendanceButton = (Button) findViewById(R.id.viewAttendanceButton);
+        updateAttendanceButton = (Button) findViewById(R.id.updateAttendanceButton);
         textView = (TextView) findViewById(R.id.textView);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
@@ -144,16 +145,19 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
             }
         });
 
-        // Attendance button onClickListener
-        attendanceButton.setOnClickListener(new View.OnClickListener() {
+        // Update Attendance button onClickListener
+        updateAttendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userProfile.getPost().equals("student")) {
+                startActivity(new Intent(SignedInMainMenuActivity.this, UpdateAttendanceActivity.class));
+            }
+        });
 
-                }
-                else {
-                    startActivity(new Intent(SignedInMainMenuActivity.this, UpdateAttendanceActivity.class));
-                }
+        // View Attendance button onClickListener
+        viewAttendanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignedInMainMenuActivity.this, ViewAttendanceActivity.class));
             }
         });
     }
@@ -281,12 +285,18 @@ public class SignedInMainMenuActivity extends AppCompatActivity {
         if(!userPresent) {
 //            addDetailsButton.setEnabled(false);
             evaluationButton.setEnabled(false);
-            attendanceButton.setEnabled(false);
+            updateAttendanceButton.setEnabled(false);
+            viewAttendanceButton.setEnabled(false);
         }
         else {
 //            addDetailsButton.setEnabled(true);
             evaluationButton.setEnabled(true);
-            attendanceButton.setEnabled(true);
+            updateAttendanceButton.setEnabled(true);
+            viewAttendanceButton.setEnabled(true);
+
+            if(userProfile.getPost().equals("student")) {
+                updateAttendanceButton.setVisibility(View.GONE);
+            }
         }
     }
 }

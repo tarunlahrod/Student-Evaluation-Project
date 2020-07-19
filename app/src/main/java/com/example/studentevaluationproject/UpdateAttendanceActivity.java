@@ -1,24 +1,31 @@
 package com.example.studentevaluationproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 
-public class UpdateAttendanceActivity extends AppCompatActivity {
+public class UpdateAttendanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private EditText total_lecture_count, attendance_copied_csv_data_EditText;
-    private Button addAttendanceToFirebaseButton;
+    private Button addAttendanceToFirebaseButton, pick_date_button;
 
-    private String total_lecture_count_value, csv_data;
+    private String total_lecture_count_value, csv_data, selectedDateString;
 
     DatabaseReference rootRef, currentRef;
     UserProfile userProfile;
@@ -32,6 +39,19 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
         total_lecture_count = (EditText) findViewById(R.id.total_lecture_count);
         attendance_copied_csv_data_EditText = (EditText) findViewById(R.id.attendance_copied_csv_data_EditText);
         addAttendanceToFirebaseButton = (Button) findViewById(R.id.addAttendanceToFirebaseButton);
+        pick_date_button = (Button) findViewById(R.id.pick_date_button);
+
+        selectedDateString = pick_date_button.getText().toString();
+        Log.i("selectedDateString", selectedDateString);
+
+        // Open DatePickerFragment when "Pick Date" Button is clicked
+        pick_date_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "Date Picker");
+            }
+        });
 
         rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -47,6 +67,9 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
 
                     // add the total number of lectures as a separate value in attendance directory
                     currentRef.child("total_lecture_count").setValue(total_lecture_count_value);
+
+                    // add the last update date in the attendance directory
+                    currentRef.child("last_update").setValue(selectedDateString);
 
                     // using StringTokenizer to tokenize lines (or rows)
                     StringTokenizer rowToken = new StringTokenizer(csv_data, "\n");
@@ -97,10 +120,22 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
                     generate_toast("Attendance updated successfully");
                     finish();
                 }
-
-
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        selectedDateString = format.format(calendar.getTime());
+        pick_date_button.setText(selectedDateString);
     }
 
     public void generate_toast(String msg) {
@@ -121,6 +156,11 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
                 generate_toast("Total lecture count must be greater than 0");
                 return false;
             }
+        }
+
+        if(selectedDateString.equals("Pick Date")) {
+            generate_toast("Select last update date");
+            return false;
         }
 
         if(attendance_copied_csv_data_EditText.getText().toString().isEmpty()) {

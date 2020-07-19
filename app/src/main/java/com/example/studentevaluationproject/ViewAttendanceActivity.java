@@ -21,10 +21,10 @@ import java.util.ArrayList;
 public class ViewAttendanceActivity extends AppCompatActivity {
 
     private ListView attendance_ListView;
-    private TextView class_TextView;
+    private TextView class_TextView, last_update_TextView;
 
     private int total_lectures;
-    String total_lectures_string, branch, semester;
+    String total_lectures_string, branch, semester, last_update_date;
 
     ArrayList<StudentAttendanceRow> attendanceRowList = new ArrayList<>();
 
@@ -39,6 +39,7 @@ public class ViewAttendanceActivity extends AppCompatActivity {
 
         attendance_ListView = (ListView) findViewById(R.id.attendance_ListView);
         class_TextView = (TextView) findViewById(R.id.class_TextView);
+        last_update_TextView = (TextView) findViewById(R.id.last_update_TextView);
 
         branch = userProfile.getInstance().getBranch();
         semester = userProfile.getInstance().getSemester();
@@ -64,6 +65,20 @@ public class ViewAttendanceActivity extends AppCompatActivity {
             }
         });
 
+        // Get the last update date of the attendance
+        currentRef.child("last_update").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                last_update_date = dataSnapshot.getValue(String.class);
+                last_update_TextView.setText("Last updated: " + last_update_date);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         // Get the student attendance and add it to list view
         currentRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -72,7 +87,7 @@ public class ViewAttendanceActivity extends AppCompatActivity {
                 roll = dataSnapshot.getKey();
                 Log.i("key", roll);
 
-                if(!roll.equals("total_lecture_count")) {
+                if(!roll.equals("total_lecture_count") && !roll.equals("last_update")) {
                     name = dataSnapshot.child("name").getValue(String.class);
                     attendance = dataSnapshot.child("attendance").getValue(String.class);
 
